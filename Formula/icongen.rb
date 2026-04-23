@@ -14,7 +14,7 @@ class Icongen < Formula
 
   resource "pillow" do
     url "https://files.pythonhosted.org/packages/8c/21/c2bcdd5906101a30244eaffc1b6e6ce71a31bd0742a01eb89e660ebfac2d/pillow-12.2.0.tar.gz"
-    sha256 "a830b1a40919539d07806aa58e1b114df53ddd43213d9c8b75847eee6c01825"
+    sha256 "a830b1a40919539d07806aa58e1b114df53ddd43213d9c8b75847eee6c0182b5"
   end
 
   def install
