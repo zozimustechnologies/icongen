@@ -8,28 +8,21 @@ Generate icons at multiple sizes from a logo image (SVG, PNG, JPG).
 
 ```sh
 # Install via tap (uses this repo as the formula source)
-brew tap avichadda/icongen https://github.com/avichadda/icongen
+brew tap zozimustechnologies/icongen https://github.com/zozimustechnologies/icongen
 brew install icongen
 ```
-
-> **First-time release setup:** After tagging `v1.0.0` on GitHub, fill in the `sha256` in
-> [Formula/icongen.rb](Formula/icongen.rb):
-> ```sh
-> curl -L https://github.com/avichadda/icongen/archive/refs/tags/v1.0.0.tar.gz | shasum -a 256
-> ```
-> Then update `Formula/icongen.rb` with the printed hash.
 
 ### Development (HEAD install)
 
 ```sh
-brew tap avichadda/icongen https://github.com/avichadda/icongen
+brew tap zozimustechnologies/icongen https://github.com/zozimustechnologies/icongen
 brew install --HEAD icongen
 ```
 
 ### pip
 
 ```sh
-pip install git+https://github.com/avichadda/icongen.git
+pip install git+https://github.com/zozimustechnologies/icongen.git
 ```
 
 ## Dependencies

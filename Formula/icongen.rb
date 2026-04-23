@@ -2,15 +2,12 @@ class Icongen < Formula
   include Language::Python::Virtualenv
 
   desc "Generate icons at multiple sizes from a logo image (SVG/PNG/JPG)"
-  homepage "https://github.com/avichadda/icongen"
-  # Fill in the url + sha256 after tagging your first release:
-  #   git tag v1.0.0 && git push origin v1.0.0
-  #   curl -L https://github.com/avichadda/icongen/archive/refs/tags/v1.0.0.tar.gz | shasum -a 256
-  url "https://github.com/avichadda/icongen/archive/refs/tags/v1.0.0.tar.gz"
-  sha256 "FILL_IN_SHA256_AFTER_TAGGING_RELEASE"
+  homepage "https://github.com/zozimustechnologies/icongen"
+  url "https://github.com/zozimustechnologies/icongen/archive/refs/tags/v1.0.0.tar.gz"
+  sha256 "775b87caf7c89a2753da3d7f8ea4c61e1dd335f17c39ce9ea0823e7607aba766"
   license "MIT"
 
-  head "https://github.com/avichadda/icongen.git", branch: "main"
+  head "https://github.com/zozimustechnologies/icongen.git", branch: "main"
 
   depends_on "python@3.13"
   depends_on "librsvg"  # provides rsvg-convert for SVG input
