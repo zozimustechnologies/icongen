@@ -9,7 +9,7 @@ class Icongen < Formula
 
   head "https://github.com/zozimustechnologies/icongen.git", branch: "main"
 
-  depends_on "python@3.13"
+  depends_on "python@3.12"
   depends_on "librsvg"  # provides rsvg-convert for SVG input
 
   resource "pillow" do
