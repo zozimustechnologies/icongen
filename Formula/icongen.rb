@@ -29,7 +29,20 @@ class Icongen < Formula
   end
 
   def install
-    virtualenv_install_with_resources
+    venv = virtualenv_create(libexec, "python3.12")
+    site_packages = libexec/"lib/python3.12/site-packages"
+
+    # Pillow is a binary extension; Homebrew's --no-binary=:all: prevents normal
+    # wheel installs. Instead, extract the pre-built wheel (it's just a zip) and
+    # copy the contents straight into site-packages — exactly what pip does.
+    resource("pillow").stage do
+      cp_r Pathname.pwd.children, site_packages
+    end
+
+    # icongen itself is pure Python — pip handles it fine.
+    system libexec/"bin/pip", "install", "--no-deps", buildpath
+
+    bin.install_symlink libexec/"bin/icongen"
   end
 
   test do
