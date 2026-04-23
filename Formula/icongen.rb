@@ -7,8 +7,8 @@ class Icongen < Formula
 
   head "https://github.com/zozimustechnologies/icongen.git", branch: "main"
 
+  depends_on "librsvg" # provides rsvg-convert for SVG input
   depends_on "python@3.12"
-  depends_on "librsvg"  # provides rsvg-convert for SVG input
 
   on_macos do
     on_arm do
