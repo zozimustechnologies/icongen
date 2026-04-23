@@ -1,6 +1,4 @@
 class Icongen < Formula
-  include Language::Python::Virtualenv
-
   desc "Generate icons at multiple sizes from a logo image (SVG/PNG/JPG)"
   homepage "https://github.com/zozimustechnologies/icongen"
   url "https://github.com/zozimustechnologies/icongen/archive/refs/tags/v1.0.0.tar.gz"
@@ -29,20 +27,37 @@ class Icongen < Formula
   end
 
   def install
-    venv = virtualenv_create(libexec, "python3.12")
-    site_packages = libexec/"lib/python3.12/site-packages"
+    python = Formula["python@3.12"].opt_bin/"python3.12"
 
-    # Pillow is a binary extension; Homebrew's --no-binary=:all: prevents normal
-    # wheel installs. Instead, extract the pre-built wheel (it's just a zip) and
-    # copy the contents straight into site-packages — exactly what pip does.
+    # Create virtualenv WITHOUT pip to avoid the pyexpat/libexpat symbol
+    # incompatibility between Homebrew's python@3.12 bottle and macOS CLT < 26.3.
+    system python, "-m", "venv", "--without-pip", "--system-site-packages", libexec
+
+    site_packages = libexec/"lib/python3.12/site-packages"
+    site_packages.mkpath
+
+    # Pillow: the .whl resource is a raw zip file (Homebrew doesn't auto-extract it).
+    # Unzip the wheel directly into site-packages — this is exactly what pip does.
     resource("pillow").stage do
-      cp_r Pathname.pwd.children, site_packages
+      whl = Dir["*.whl"].first
+      if whl
+        system "/usr/bin/unzip", "-q", "-o", whl, "-d", site_packages
+      else
+        cp_r Pathname.pwd.children, site_packages
+      end
     end
 
-    # icongen itself is pure Python — pip handles it fine.
-    system libexec/"bin/pip", "install", "--no-deps", buildpath
+    # Copy the icongen package (pure Python, no compilation needed)
+    cp_r "icongen", site_packages
 
-    bin.install_symlink libexec/"bin/icongen"
+    # Write a thin entry-point wrapper script
+    (bin/"icongen").write <<~SH
+      #!/bin/sh
+      exec "#{libexec}/bin/python3.12" -c \
+        "import sys; from icongen.cli import main; sys.exit(main() or 0)" "$@"
+    SH
+    chmod 0755, bin/"icongen"
+  end
   end
 
   test do
