@@ -58,7 +58,6 @@ class Icongen < Formula
     SH
     chmod 0755, bin/"icongen"
   end
-  end
 
   test do
     system bin/"icongen", "--version"
